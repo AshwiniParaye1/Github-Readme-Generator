@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 //app/page.tsx
-
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
 "use client";
 
 import { useState } from "react";
@@ -16,50 +15,17 @@ export default function Home() {
   const [readme, setReadme] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
-  const fetchRepositoryFiles = async (repoUrl: string) => {
-    try {
-      const repoPath = repoUrl
-        .replace("https://github.com/", "")
-        .replace(/\/$/, "");
-      const apiUrl = `https://api.github.com/repos/${repoPath}/contents`;
-
-      const response = await fetch(apiUrl);
-      if (!response.ok) throw new Error("Failed to fetch repository files");
-
-      const files = await response.json();
-      const fileContents = await Promise.all(
-        files
-          .filter((file: any) => file.type === "file") // Only process files, ignore folders
-          .map(async (file: any) => {
-            const fileResponse = await fetch(file.download_url);
-            const content = await fileResponse.text();
-            return { name: file.name, content };
-          })
-      );
-
-      return fileContents;
-    } catch (error) {
-      console.error("Error fetching repository files:", error);
-      toast.error("Failed to fetch repository files.");
-      return [];
-    }
-  };
-
   const generateReadme = async () => {
     try {
       setLoading(true);
 
-      // Fetch repository files
-      const files = await fetchRepositoryFiles(repoUrl);
-      if (files.length === 0)
-        throw new Error("No valid files found in the repository");
-
+      // Send only the GitHub repository URL
       const response = await fetch("/api/analyze", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ files })
+        body: JSON.stringify({ repoUrl })
       });
 
       const data = await response.json();
