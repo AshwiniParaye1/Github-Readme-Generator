@@ -17,9 +17,9 @@ export async function POST(req: Request) {
   try {
     const { files } = await req.json();
 
-    if (!files || !Array.isArray(files)) {
+    if (!files || !Array.isArray(files) || files.length === 0) {
       return NextResponse.json(
-        { error: "Files content is required as an array of objects" },
+        { error: "Files content is required as a non-empty array of objects" },
         { status: 400 }
       );
     }
@@ -34,8 +34,7 @@ export async function POST(req: Request) {
 
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-    const prompt = `You are an expert developer tasked with creating a professional README.md file for a repository. 
-    Analyze the following repository files and create a comprehensive README.md that includes:
+    const prompt = `Can you analyze this repository and generate a professional README for it? Include:
     
     1. Project Title and Description
     2. Features
@@ -43,13 +42,14 @@ export async function POST(req: Request) {
     4. Installation Instructions
     5. Usage Guide
     6. API Documentation (if applicable)
-    7. Contributing Guidelines
-    8. License Information
+    7. License Information (if applicable)
+    8. Project Type (e.g., Web Application, Mobile App)
+    9. Thank You Note from Repository Owner
     
     Repository files:
     ${filesContent}
     
-    Please generate a professional README.md in markdown format.`;
+    Please generate the README.md in markdown format.`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
@@ -62,8 +62,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ readme: readmeContent });
   } catch (error) {
     console.error("Error:", error);
-    const errorMessage =
-      error instanceof Error ? error.message : "Failed to generate README";
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    return NextResponse.json(
+      {
+        error:
+          error instanceof Error ? error.message : "Failed to generate README"
+      },
+      { status: 500 }
+    );
   }
 }
