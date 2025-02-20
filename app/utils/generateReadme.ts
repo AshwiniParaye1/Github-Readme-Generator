@@ -19,10 +19,12 @@ export function generateReadme(
     }\n\n`;
   }
 
-  if (sections.features && data.topics.length > 0) {
+  if (sections.features) {
     readme += `## ✨ Features\n${
       customContent.features ||
-      data.topics.map((topic: string) => `- ${topic}`).join("\n")
+      (data.topics.length > 0
+        ? data.topics.map((topic: string) => `- ${topic}`).join("\n")
+        : "No features listed.")
     }\n\n`;
   }
 
