@@ -44,5 +44,41 @@ export function generateReadme(
     }\n`;
   }
 
+  if (sections.projectStructure) {
+    readme += `## 📂 Project Structure\n${
+      customContent.projectStructure ||
+      "Describe your project's folder structure here."
+    }\n\n`;
+  }
+
+  if (sections.apiStructure) {
+    readme += `## 🔗 API Structure\n${
+      customContent.apiStructure ||
+      "List your API endpoints and their functionality here."
+    }\n\n`;
+  }
+
+  if (sections.contribution) {
+    readme += `## 🤝 Contribution\n${
+      customContent.contribution ||
+      "Contributions are welcome! Please open an issue or submit a pull request."
+    }\n\n`;
+  }
+
+  if (sections.license) {
+    readme += `## 📜 License\n${
+      customContent.license ||
+      "This project is licensed under the MIT License - see the LICENSE file for details."
+    }\n\n`;
+  }
+
+  // Adding a Thank You Note at the End
+  readme += `---
+  
+  Thank you for checking out ${
+    customContent.title || data.name
+  }! If you find it useful, consider giving it a star on GitHub!  
+  \n`;
+
   return readme;
 }
