@@ -2,6 +2,9 @@
 
 import axios from "axios";
 
+// Use environment variables for security (recommended)
+const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+
 export async function fetchRepoData(repoUrl: string) {
   try {
     const match = repoUrl.match(/github\.com\/([^/]+)\/([^/]+)/);
@@ -9,22 +12,32 @@ export async function fetchRepoData(repoUrl: string) {
 
     const [, owner, repo] = match;
 
+    // Define headers for authentication
+    const headers = GITHUB_TOKEN
+      ? { Authorization: `Bearer ${GITHUB_TOKEN}` }
+      : {};
+
     // Fetch repository details
     const { data } = await axios.get(
-      `https://api.github.com/repos/${owner}/${repo}`
+      `https://api.github.com/repos/${owner}/${repo}`,
+      { headers }
     );
 
-    // Fetch repository topics (as features)
+    // Fetch repository topics
     const topicsResponse = await axios.get(
       `https://api.github.com/repos/${owner}/${repo}/topics`,
       {
-        headers: { Accept: "application/vnd.github.mercy-preview+json" }
+        headers: {
+          ...headers,
+          Accept: "application/vnd.github.mercy-preview+json"
+        }
       }
     );
 
     // Fetch languages used
     const languagesResponse = await axios.get(
-      `https://api.github.com/repos/${owner}/${repo}/languages`
+      `https://api.github.com/repos/${owner}/${repo}/languages`,
+      { headers }
     );
 
     return {
