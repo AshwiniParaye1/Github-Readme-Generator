@@ -24,7 +24,7 @@ export function generateReadme(
       customContent.features ||
       (data.topics.length > 0
         ? data.topics.map((topic: string) => `- ${topic}`).join("\n")
-        : "No features listed.")
+        : "List your project's features here.")
     }\n\n`;
   }
 
