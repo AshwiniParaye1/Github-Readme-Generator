@@ -23,7 +23,7 @@ export function generateReadme(
     readme += `## ✨ Features\n${
       customContent.features ||
       (data.topics.length > 0
-        ? data.topics.map((topic: string) => `- ${topic}`).join("\n")
+        ? "- " + data.topics.join("\n- ")
         : "List your project's features here.")
     }\n\n`;
   }
@@ -32,7 +32,7 @@ export function generateReadme(
     readme += `## 🔧 Technologies Used\n${
       customContent.techStack ||
       (data.languages.length > 0
-        ? data.languages.map((lang: string) => `- ${lang}`).join("\n")
+        ? "- " + data.languages.join("\n- ")
         : "- No languages detected.")
     }\n\n`;
   }
@@ -40,40 +40,9 @@ export function generateReadme(
   if (sections.installation) {
     readme += `## 📦 Installation\n${
       customContent.installation ||
-      `\`\`\`sh
-git clone https://github.com/${data.owner}/${data.repo}.git
-cd ${data.repo}
-npm install
-\`\`\`\n`
+      `\`\`\`sh\ngit clone https://github.com/${data.owner}/${data.repo}.git\ncd ${data.repo}\nnpm install\n\`\`\`\n`
     }\n`;
   }
-
-  if (sections.projectStructure) {
-    readme += `## 📁 Project Structure\n${
-      customContent.projectStructure || "Add your project structure here."
-    }\n\n`;
-  }
-
-  if (sections.apiStructure) {
-    readme += `## 🌐 API Structure\n${
-      customContent.apiStructure || "Add your API structure here."
-    }\n\n`;
-  }
-
-  if (sections.contribution) {
-    readme += `## 🤝 Contribution\n${
-      customContent.contribution ||
-      "Guidelines for contributing to the project."
-    }\n\n`;
-  }
-
-  if (sections.license) {
-    readme += `## 📄 License\n${
-      customContent.license || "This project is licensed under the MIT License."
-    }\n\n\t`;
-  }
-
-  readme += `Thank you for checking out this project! Feel free to contribute or reach out with feedback.\n`;
 
   return readme;
 }

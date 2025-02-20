@@ -7,6 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { fetchRepoData } from "../utils/fetchRepoData";
 
 interface RepoInputProps {
   onGenerate: (
@@ -33,21 +34,11 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
   const [customContent, setCustomContent] = useState<Record<string, string>>(
     {}
   );
+  const [latestRepoData, setLatestRepoData] = useState<Record<string, string>>(
+    {}
+  );
   const [editingSection, setEditingSection] = useState<string | null>(null);
-  const [readmeGenerated, setReadmeGenerated] = useState(false); // Track README generation
-
-  // Default content (used when editing before fetching data)
-  const defaultContent: Record<string, string> = {
-    title: "Project Title",
-    description: "Short description about the project.",
-    features: "List of features included in the project.",
-    techStack: "Technologies used in this project.",
-    installation: "Steps to install and run the project.",
-    projectStructure: "Folder structure explanation.",
-    apiStructure: "API endpoints and how they work.",
-    contribution: "Guidelines for contributing.",
-    license: "Project license details."
-  };
+  const [readmeGenerated, setReadmeGenerated] = useState(false);
 
   const handleToggle = (section: string) => {
     setSections((prev) => ({ ...prev, [section]: !prev[section] }));
@@ -55,18 +46,14 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
 
   const handleEdit = (section: string) => {
     setEditingSection(section);
-
-    // Ensure text area shows existing content when editing
     setCustomContent((prev) => ({
       ...prev,
-      [section]: prev[section] || defaultContent[section] || ""
+      [section]: prev[section] || latestRepoData[section] || ""
     }));
   };
 
   const handleSave = (section: string) => {
     setEditingSection(null);
-
-    // Trigger README update with the latest data
     onGenerate(repoUrl, sections, customContent);
   };
 
@@ -74,14 +61,27 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
     setCustomContent((prev) => ({ ...prev, [section]: content }));
   };
 
-  const handleGenerate = () => {
-    onGenerate(repoUrl, sections, customContent);
-    setReadmeGenerated(true); // Mark README as generated
+  const handleGenerate = async () => {
+    const repoData = await fetchRepoData(repoUrl);
+    if (repoData) {
+      setLatestRepoData({
+        title: repoData.name,
+        description: repoData.description || "No description available.",
+        features:
+          repoData.topics.length > 0 ? repoData.topics.join("\n- ") : "",
+        techStack:
+          repoData.languages.length > 0 ? repoData.languages.join("\n- ") : "",
+        installation: `\`\`\`sh\ngit clone https://github.com/${repoData.owner}/${repoData.repo}.git\ncd ${repoData.repo}\nnpm install\n\`\`\``
+      });
+
+      setReadmeGenerated(true);
+      onGenerate(repoUrl, sections, customContent);
+    }
   };
 
-  // **Conditions to Disable Buttons**
   const isRepoUrlEmpty = repoUrl.trim() === "";
-  const isReadmeEmpty = Object.keys(customContent).length === 0;
+  const isReadmeGenerated =
+    readmeGenerated && Object.keys(latestRepoData).length > 0;
 
   return (
     <div className="p-4 space-y-4">
@@ -107,7 +107,7 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
               variant="outline"
               size="sm"
               onClick={() => handleEdit(section)}
-              disabled={isRepoUrlEmpty || !readmeGenerated} // Disable initially, enable after README is generated
+              disabled={isRepoUrlEmpty || !isReadmeGenerated}
             >
               Edit
             </Button>
