@@ -38,15 +38,16 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
     {}
   );
   const [editingSection, setEditingSection] = useState<string | null>(null);
-  const [originalContent, setOriginalContent] = useState<string>(""); // Stores original content before editing
+  const [originalContent, setOriginalContent] = useState<string>("");
   const [readmeGenerated, setReadmeGenerated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const handleToggle = (section: string) => {
     setSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
   const handleEdit = (section: string) => {
-    setOriginalContent(customContent[section] || latestRepoData[section] || ""); // Save original content
+    setOriginalContent(customContent[section] || latestRepoData[section] || "");
     setEditingSection(section);
   };
 
@@ -60,9 +61,9 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
       setCustomContent((prev) => ({
         ...prev,
         [editingSection]: originalContent
-      })); // Restore original content
+      }));
     }
-    setEditingSection(null); // Exit edit mode
+    setEditingSection(null);
   };
 
   const handleCustomContentChange = (section: string, content: string) => {
@@ -70,6 +71,9 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
   };
 
   const handleGenerate = async () => {
+    setIsLoading(true); // Show loading message
+    setReadmeGenerated(false);
+
     const repoData = await fetchRepoData(repoUrl);
     if (repoData) {
       setLatestRepoData({
@@ -85,6 +89,8 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
       setReadmeGenerated(true);
       onGenerate(repoUrl, sections, customContent);
     }
+
+    setIsLoading(false); // Hide loading message
   };
 
   const isRepoUrlEmpty = repoUrl.trim() === "";
@@ -146,7 +152,7 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
         onClick={handleGenerate}
         disabled={isRepoUrlEmpty}
       >
-        Generate README
+        {isLoading ? "Generating..." : "Generate README"}
       </Button>
     </div>
   );
