@@ -115,7 +115,7 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
               variant="outline"
               size="sm"
               onClick={() => handleEdit(section)}
-              disabled={isRepoUrlEmpty || !isReadmeGenerated || !isEnabled} // 🚀 Edit enabled only if toggle is ON
+              disabled={isRepoUrlEmpty || !isReadmeGenerated || !isEnabled}
             >
               Edit
             </Button>
