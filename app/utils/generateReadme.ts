@@ -59,6 +59,14 @@ export function generateReadme(
     }\n\`\`\`\n\n`;
   }
 
+  if (sections.howToUse) {
+    readme += `## 🚀 How to Use\n${
+      customContent.howToUse ||
+      data.howToUse ||
+      "Instructions on how to use the project."
+    }\n\n`;
+  }
+
   if (sections.contribution) {
     readme += `## 🤝 Contribution\n${
       customContent.contribution ||

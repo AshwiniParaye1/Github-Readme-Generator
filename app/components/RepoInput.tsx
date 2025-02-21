@@ -27,7 +27,8 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
     installation: true,
     projectStructure: false,
     contribution: false,
-    license: false
+    license: false,
+    howToUse: true // Added howToUse section
   });
 
   const [customContent, setCustomContent] = useState<Record<string, string>>(
@@ -104,7 +105,8 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
         contribution:
           "Contributions are welcome! Please open an issue or submit a pull request.",
         license:
-          "This project is licensed under the MIT License - see the LICENSE file for details."
+          "This project is licensed under the MIT License - see the LICENSE file for details.",
+        howToUse: "Provide instructions on how to use your project here." // Added howToUse
       };
 
       setLatestRepoData(newLatestRepoData);
