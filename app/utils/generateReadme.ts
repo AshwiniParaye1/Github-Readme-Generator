@@ -45,10 +45,9 @@ export function generateReadme(
   }
 
   if (sections.projectStructure) {
-    readme += `## 📂 Project Structure\n${
-      customContent.projectStructure ||
-      "Describe your project's folder structure here."
-    }\n\n`;
+    readme += `## 📂 Project Structure\n\`\`\`\n${
+      customContent.projectStructure || data.projectStructure
+    }\n\`\`\`\n\n`;
   }
 
   if (sections.apiStructure) {
@@ -72,7 +71,6 @@ export function generateReadme(
     }\n\n`;
   }
 
-  // Adding a Thank You Note at the End
   readme += `---
   
   Thank you for checking out ${
