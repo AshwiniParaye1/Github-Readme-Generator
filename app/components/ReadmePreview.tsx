@@ -3,6 +3,7 @@
 "use client";
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import { toast } from "react-toastify";
 
 interface ReadmePreviewProps {
   readmeContent: string;
@@ -12,23 +13,30 @@ export default function ReadmePreview({ readmeContent }: ReadmePreviewProps) {
   const handleCopyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(readmeContent);
-      alert("README copied to clipboard!");
+      toast.success("Successfully copied to clipboard!");
     } catch (error) {
       console.error("Failed to copy:", error);
-      alert("Failed to copy README.");
+      toast.error("Failed to copy README.");
     }
   };
 
   const handleDownloadReadme = () => {
-    const blob = new Blob([readmeContent], { type: "text/markdown" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "README.md";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    try {
+      const blob = new Blob([readmeContent], { type: "text/markdown" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "README.md";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast.success("README downloaded!");
+    } catch (error) {
+      console.error("Download failed:", error);
+      toast.error("Failed to download README.");
+    }
   };
 
   return (

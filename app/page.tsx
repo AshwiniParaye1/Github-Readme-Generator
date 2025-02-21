@@ -7,6 +7,8 @@ import { fetchRepoData } from "./utils/fetchRepoData";
 import { generateReadme } from "./utils/generateReadme";
 import RepoInput from "./components/RepoInput";
 import ReadmePreview from "./components/ReadmePreview";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const [readmeContent, setReadmeContent] = useState("");
@@ -31,6 +33,7 @@ export default function Home() {
         <RepoInput onGenerate={handleGenerate} />
         {readmeContent && <ReadmePreview readmeContent={readmeContent} />}
       </div>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }
