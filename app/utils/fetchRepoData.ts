@@ -140,7 +140,7 @@ async function fetchFrameworksAndDatabases(
 
     return { frameworks, databases };
   } catch (error) {
-    console.error("Error fetching package.json:", error);
+    console.warn("Error fetching package.json:", error);
     return { frameworks: [], databases: [] };
   }
 }
@@ -159,7 +159,7 @@ async function fetchFileContent(
     );
     return Buffer.from(data.content, "base64").toString("utf-8");
   } catch (error) {
-    console.error(`Error fetching file ${path}:`, error);
+    console.warn(`Error fetching file ${path}:`, error);
     return "";
   }
 }
@@ -181,14 +181,14 @@ function generateDescription(
   }
 
   if (frameworks.length > 0) {
-    description += `Built with ${frameworks.join(", ")}.`;
+    description += ` Built with ${frameworks.join(", ")}.`;
   }
 
   if (languages.length > 0) {
     description += ` Written in ${languages.join(", ")}.`;
   }
 
-  return description || "Add a brief description of the project.";
+  return description || "A brief description of the project.";
 }
 
 // Format repository files into a tree structure
