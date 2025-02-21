@@ -122,63 +122,70 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
     readmeGenerated && Object.keys(latestRepoData).length > 0;
 
   return (
-    <div className="p-4 space-y-4">
-      <Input
-        type="text"
-        className="w-full p-2 border rounded"
-        placeholder="Enter GitHub Repository URL (e.g., https://github.com/user/repo)"
-        value={repoUrl}
-        onChange={(e) => setRepoUrl(e.target.value)}
-      />
-      <div className="space-y-2">
-        {Object.entries(sections).map(([section, isEnabled]) => (
-          <div key={section} className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Switch
-                checked={isEnabled}
-                onCheckedChange={() => handleToggle(section)}
-                disabled={isRepoUrlEmpty}
-              />
-              <span className="capitalize">{section}</span>
+    <div className=" bg-white rounded-lg shadow-md p-6 flex flex-col h-full">
+      {/* Input and Switches */}
+      <div>
+        <Input
+          type="text"
+          className="w-full p-2 border rounded focus:ring-purple-500 focus:border-purple-500"
+          placeholder="Enter GitHub Repository URL"
+          value={repoUrl}
+          onChange={(e) => setRepoUrl(e.target.value)}
+        />
+        <div className="mt-6 space-y-2">
+          {Object.entries(sections).map(([section, isEnabled]) => (
+            <div key={section} className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Switch
+                  checked={isEnabled}
+                  onCheckedChange={() => handleToggle(section)}
+                  disabled={isRepoUrlEmpty}
+                />
+                <span className="text-gray-700 capitalize">{section}</span>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleEdit(section)}
+                disabled={isRepoUrlEmpty || !isReadmeGenerated || !isEnabled}
+              >
+                Edit
+              </Button>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleEdit(section)}
-              disabled={isRepoUrlEmpty || !isReadmeGenerated || !isEnabled}
-            >
-              Edit
-            </Button>
+          ))}
+        </div>
+
+        {editingSection && (
+          <div className="mt-4">
+            <Textarea
+              value={customContent[editingSection] || ""}
+              onChange={(e) =>
+                handleCustomContentChange(editingSection, e.target.value)
+              }
+              placeholder={`Update ${editingSection}`}
+              rows={6}
+              className="w-full p-2 border rounded focus:ring-purple-500 focus:border-purple-500"
+            />
+            <div className="mt-2 flex space-x-2">
+              <Button onClick={() => handleSave(editingSection)}>Save</Button>
+              <Button variant="outline" onClick={handleCancel}>
+                Cancel
+              </Button>
+            </div>
           </div>
-        ))}
+        )}
       </div>
 
-      {editingSection && (
-        <div className="mt-4">
-          <Textarea
-            value={customContent[editingSection] || ""}
-            onChange={(e) =>
-              handleCustomContentChange(editingSection, e.target.value)
-            }
-            placeholder={`Update ${editingSection}`}
-            rows={6}
-          />
-          <div className="mt-2 flex space-x-2">
-            <Button onClick={() => handleSave(editingSection)}>Save</Button>
-            <Button variant="outline" onClick={handleCancel}>
-              Cancel
-            </Button>
-          </div>
-        </div>
-      )}
-
-      <Button
-        className="w-full"
-        onClick={handleGenerate}
-        disabled={isRepoUrlEmpty}
-      >
-        {isLoading ? "Generating..." : "Generate README"}
-      </Button>
+      {/* Generate Button - Pushed to the bottom */}
+      <div className="mt-auto">
+        <Button
+          className="w-full mt-4 bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          onClick={handleGenerate}
+          disabled={isRepoUrlEmpty}
+        >
+          {isLoading ? "Generating..." : "Generate README"}
+        </Button>
+      </div>
     </div>
   );
 }
