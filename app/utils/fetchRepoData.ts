@@ -71,6 +71,7 @@ function formatTree(tree: any[]) {
   const ignoredExtensions = [".svg", ".png", ".jpg", ".gif", ".mjs", ".ico"];
   const ignoredFiles = [
     "next.config.ts",
+    "node_modules",
     "package.json",
     "package-lock.json",
     "postcss.config.mjs",
