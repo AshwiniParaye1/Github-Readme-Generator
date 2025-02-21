@@ -59,13 +59,6 @@ export function generateReadme(
     }\n\`\`\`\n\n`;
   }
 
-  if (sections.apiStructure) {
-    readme += `## 🔗 API Structure\n${
-      customContent.apiStructure ||
-      "List your API endpoints and their functionality here."
-    }\n\n`;
-  }
-
   if (sections.contribution) {
     readme += `## 🤝 Contribution\n${
       customContent.contribution ||

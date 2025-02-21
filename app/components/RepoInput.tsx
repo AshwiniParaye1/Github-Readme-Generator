@@ -26,7 +26,6 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
     techStack: true,
     installation: true,
     projectStructure: false,
-    apiStructure: false,
     contribution: false,
     license: false
   });
@@ -102,7 +101,6 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
             : "- No technologies detected.",
         installation: `\`\`\`sh\ngit clone https://github.com/${repoData.owner}/${repoData.repo}.git\ncd ${repoData.repo}\nnpm install\n\`\`\``,
         projectStructure: repoData.projectStructure || "",
-        apiStructure: "",
         contribution:
           "Contributions are welcome! Please open an issue or submit a pull request.",
         license:
