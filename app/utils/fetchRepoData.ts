@@ -199,7 +199,16 @@ function generateDescription(
 
 // Format repository files into a tree structure
 function formatTree(tree: any[]) {
-  const ignoredExtensions = [".svg", ".png", ".jpg", ".gif", ".mjs", ".ico"];
+  const ignoredExtensions = [
+    ".svg",
+    ".png",
+    ".jpg",
+    ".gif",
+    ".mjs",
+    ".ico",
+    ".mp3",
+    ".mp4"
+  ];
   const ignoredFiles = [
     "next.config.ts",
     "node_modules",
@@ -209,7 +218,9 @@ function formatTree(tree: any[]) {
     "tsconfig.json",
     ".gitignore",
     "README.md",
-    ".eslintrc.json"
+    ".eslintrc.json",
+    "vite.config.js",
+    "eslint.config.js"
   ];
 
   let treeStructure: any = {};
