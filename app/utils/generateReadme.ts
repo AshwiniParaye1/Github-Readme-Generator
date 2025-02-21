@@ -29,12 +29,19 @@ export function generateReadme(
   }
 
   if (sections.techStack) {
-    readme += `## 🔧 Technologies Used\n${
+    const techStack = [
+      ...(data.languages || []),
+      ...(data.frameworks || []),
+      ...(data.databases || [])
+    ];
+
+    readme += `## 🔧 Technologies Used\n`;
+    readme +=
       customContent.techStack ||
-      (data.languages.length > 0
-        ? "- " + data.languages.join("\n- ")
-        : "- No languages detected.")
-    }\n\n`;
+      (techStack.length > 0
+        ? "- " + techStack.join("\n- ")
+        : "No technologies detected.");
+    readme += "\n\n";
   }
 
   if (sections.installation) {

@@ -89,9 +89,17 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
         features:
           repoData.topics.length > 0 ? `- ${repoData.topics.join("\n- ")}` : "",
         techStack:
-          repoData.languages.length > 0
-            ? `- ${repoData.languages.join("\n- ")}`
-            : "",
+          repoData.languages.length > 0 ||
+          repoData.frameworks.length > 0 ||
+          repoData.databases.length > 0
+            ? `- ${[
+                ...repoData.languages,
+                ...repoData.frameworks,
+                ...repoData.databases
+              ]
+                .filter(Boolean)
+                .join("\n- ")}`
+            : "- No technologies detected.",
         installation: `\`\`\`sh\ngit clone https://github.com/${repoData.owner}/${repoData.repo}.git\ncd ${repoData.repo}\nnpm install\n\`\`\``,
         projectStructure: repoData.projectStructure || "",
         apiStructure: "",

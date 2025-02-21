@@ -4,6 +4,7 @@ import axios from "axios";
 
 const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
 
+// Function to fetch repository data
 export async function fetchRepoData(repoUrl: string) {
   try {
     const match = repoUrl.match(/github\.com\/([^/]+)\/([^/]+)/);
@@ -23,14 +24,26 @@ export async function fetchRepoData(repoUrl: string) {
     // Fetch repository file structure
     const treeData = await fetchRepoTree(owner, repo, headers);
 
+    // Fetch languages
+    const languages = await fetchLanguages(owner, repo, headers);
+
+    // Fetch package.json to detect frameworks & databases
+    const { frameworks, databases } = await fetchFrameworksAndDatabases(
+      owner,
+      repo,
+      headers
+    );
+
     return {
       name: data.name,
       description: data.description || "No description available.",
       topics: data.topics || [],
-      languages: await fetchLanguages(owner, repo, headers),
+      languages,
+      frameworks,
+      databases,
       owner: data.owner.login,
       repo,
-      projectStructure: formatTree(treeData) // Ensure formatted tree is returned
+      projectStructure: formatTree(treeData)
     };
   } catch (error) {
     console.error("Error fetching repo data:", error);
@@ -38,7 +51,7 @@ export async function fetchRepoData(repoUrl: string) {
   }
 }
 
-// Fetch repository tree structure
+// Function to fetch repository tree structure
 async function fetchRepoTree(owner: string, repo: string, headers: any) {
   try {
     const { data } = await axios.get(
@@ -52,7 +65,7 @@ async function fetchRepoTree(owner: string, repo: string, headers: any) {
   }
 }
 
-// Fetch repository languages
+// Function to fetch repository languages
 async function fetchLanguages(owner: string, repo: string, headers: any) {
   try {
     const { data } = await axios.get(
@@ -66,13 +79,62 @@ async function fetchLanguages(owner: string, repo: string, headers: any) {
   }
 }
 
-// Format repository files into a tree structure
+// Function to fetch package.json and infer frameworks & databases
+async function fetchFrameworksAndDatabases(
+  owner: string,
+  repo: string,
+  headers: any
+) {
+  try {
+    const { data } = await axios.get(
+      `https://api.github.com/repos/${owner}/${repo}/contents/package.json`,
+      { headers }
+    );
+
+    // Decode base64 package.json content
+    const packageJson = JSON.parse(
+      Buffer.from(data.content, "base64").toString("utf-8")
+    );
+
+    const dependencies = {
+      ...packageJson.dependencies,
+      ...packageJson.devDependencies
+    };
+
+    // Detect frameworks
+    const frameworks = [];
+    if (dependencies.react) frameworks.push("React");
+    if (dependencies.next) frameworks.push("Next.js");
+    if (dependencies.vue) frameworks.push("Vue.js");
+    if (dependencies.nuxt) frameworks.push("Nuxt.js");
+    if (dependencies.angular) frameworks.push("Angular");
+    if (dependencies["express"]) frameworks.push("Express.js");
+    if (dependencies["nestjs"]) frameworks.push("NestJS");
+    if (dependencies["svelte"]) frameworks.push("Svelte");
+
+    // Detect databases
+    const databases = [];
+    if (dependencies["mysql"]) databases.push("MySQL");
+    if (dependencies["pg"]) databases.push("PostgreSQL");
+    if (dependencies["mongodb"]) databases.push("MongoDB");
+    if (dependencies["sequelize"]) databases.push("Sequelize (ORM)");
+    if (dependencies["prisma"]) databases.push("Prisma (ORM)");
+    if (dependencies["firebase"]) databases.push("Firebase");
+    if (dependencies["redis"]) databases.push("Redis");
+
+    return { frameworks, databases };
+  } catch (error) {
+    console.error("Error fetching package.json:", error);
+    return { frameworks: [], databases: [] };
+  }
+}
+
+// Function to format repository tree
 function formatTree(tree: any[]) {
   const ignoredExtensions = [".svg", ".png", ".jpg", ".gif", ".mjs", ".ico"];
   const ignoredFiles = [
     "next.config.ts",
     "node_modules",
-    "package.json",
     "package-lock.json",
     "postcss.config.mjs",
     "tailwind.config.ts",
@@ -91,7 +153,6 @@ function formatTree(tree: any[]) {
       ? fileName.split(".").pop()
       : "";
 
-    // Skip ignored files and extensions
     if (
       ignoredFiles.includes(fileName) ||
       ignoredExtensions.includes(`.${fileExtension}`)
@@ -102,9 +163,8 @@ function formatTree(tree: any[]) {
     let current = treeStructure;
     for (let i = 0; i < pathParts.length; i++) {
       const part = pathParts[i];
-
       if (!current[part]) {
-        current[part] = i === pathParts.length - 1 ? null : {}; // Files get `null`, folders get objects
+        current[part] = i === pathParts.length - 1 ? null : {};
       }
       current = current[part];
     }
@@ -113,7 +173,7 @@ function formatTree(tree: any[]) {
   return formatTreeToString(treeStructure);
 }
 
-// Convert tree object to string
+// Function to convert tree object to string
 function formatTreeToString(tree: any, prefix = "") {
   let result = "";
   for (const key in tree) {
@@ -122,5 +182,5 @@ function formatTreeToString(tree: any, prefix = "") {
       result += formatTreeToString(tree[key], `${prefix}│   `);
     }
   }
-  return result.trim(); // Ensure no extra spaces or newlines
+  return result.trim();
 }
