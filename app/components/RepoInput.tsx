@@ -38,6 +38,7 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
     {}
   );
   const [editingSection, setEditingSection] = useState<string | null>(null);
+  const [originalContent, setOriginalContent] = useState<string>(""); // Stores original content before editing
   const [readmeGenerated, setReadmeGenerated] = useState(false);
 
   const handleToggle = (section: string) => {
@@ -45,16 +46,23 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
   };
 
   const handleEdit = (section: string) => {
+    setOriginalContent(customContent[section] || latestRepoData[section] || ""); // Save original content
     setEditingSection(section);
-    setCustomContent((prev) => ({
-      ...prev,
-      [section]: prev[section] || latestRepoData[section] || ""
-    }));
   };
 
   const handleSave = (section: string) => {
     setEditingSection(null);
     onGenerate(repoUrl, sections, customContent);
+  };
+
+  const handleCancel = () => {
+    if (editingSection) {
+      setCustomContent((prev) => ({
+        ...prev,
+        [editingSection]: originalContent
+      })); // Restore original content
+    }
+    setEditingSection(null); // Exit edit mode
   };
 
   const handleCustomContentChange = (section: string, content: string) => {
@@ -107,13 +115,14 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
               variant="outline"
               size="sm"
               onClick={() => handleEdit(section)}
-              disabled={isRepoUrlEmpty || !isReadmeGenerated}
+              disabled={isRepoUrlEmpty || !isReadmeGenerated || !isEnabled} // 🚀 Edit enabled only if toggle is ON
             >
               Edit
             </Button>
           </div>
         ))}
       </div>
+
       {editingSection && (
         <div className="mt-4">
           <Textarea
@@ -123,11 +132,15 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
             }
             placeholder={`Update ${editingSection}`}
           />
-          <Button className="mt-2" onClick={() => handleSave(editingSection)}>
-            Save
-          </Button>
+          <div className="mt-2 flex space-x-2">
+            <Button onClick={() => handleSave(editingSection)}>Save</Button>
+            <Button variant="outline" onClick={handleCancel}>
+              Cancel
+            </Button>
+          </div>
         </div>
       )}
+
       <Button
         className="w-full"
         onClick={handleGenerate}
