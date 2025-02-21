@@ -51,7 +51,7 @@ export async function fetchRepoData(repoUrl: string) {
   }
 }
 
-// Function to fetch repository tree structure
+// Fetch repository tree structure
 async function fetchRepoTree(owner: string, repo: string, headers: any) {
   try {
     const { data } = await axios.get(
@@ -129,7 +129,7 @@ async function fetchFrameworksAndDatabases(
   }
 }
 
-// Function to format repository tree
+// Format repository files into a tree structure
 function formatTree(tree: any[]) {
   const ignoredExtensions = [".svg", ".png", ".jpg", ".gif", ".mjs", ".ico"];
   const ignoredFiles = [
@@ -153,6 +153,7 @@ function formatTree(tree: any[]) {
       ? fileName.split(".").pop()
       : "";
 
+    // Skip ignored files and extensions
     if (
       ignoredFiles.includes(fileName) ||
       ignoredExtensions.includes(`.${fileExtension}`)
@@ -164,7 +165,7 @@ function formatTree(tree: any[]) {
     for (let i = 0; i < pathParts.length; i++) {
       const part = pathParts[i];
       if (!current[part]) {
-        current[part] = i === pathParts.length - 1 ? null : {};
+        current[part] = i === pathParts.length - 1 ? null : {}; // Files get `null`, folders get objects
       }
       current = current[part];
     }
@@ -173,7 +174,7 @@ function formatTree(tree: any[]) {
   return formatTreeToString(treeStructure);
 }
 
-// Function to convert tree object to string
+// Convert tree object to string
 function formatTreeToString(tree: any, prefix = "") {
   let result = "";
   for (const key in tree) {
@@ -182,5 +183,5 @@ function formatTreeToString(tree: any, prefix = "") {
       result += formatTreeToString(tree[key], `${prefix}│   `);
     }
   }
-  return result.trim();
+  return result;
 }
