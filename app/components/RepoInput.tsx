@@ -126,7 +126,7 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
       <Input
         type="text"
         className="w-full p-2 border rounded"
-        placeholder="Enter GitHub repo URL (e.g., https://github.com/user/repo)"
+        placeholder="Enter GitHub Repository URL (e.g., https://github.com/user/repo)"
         value={repoUrl}
         onChange={(e) => setRepoUrl(e.target.value)}
       />

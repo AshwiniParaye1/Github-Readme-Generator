@@ -1,6 +1,7 @@
 //utils/fetchRepoData.ts
 
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
 
@@ -8,7 +9,11 @@ const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
 export async function fetchRepoData(repoUrl: string) {
   try {
     const match = repoUrl.match(/github\.com\/([^/]+)\/([^/]+)/);
-    if (!match) throw new Error("Invalid GitHub URL");
+    if (!match) {
+      toast.error("Invalid GitHub Repository URL.");
+      console.error("Invalid GitHub Repository URL.");
+      return null;
+    }
 
     const [, owner, repo] = match;
     const headers = GITHUB_TOKEN
@@ -63,6 +68,7 @@ export async function fetchRepoData(repoUrl: string) {
     };
   } catch (error) {
     console.error("Error fetching repo data:", error);
+    toast.error("Failed to fetch repository data.");
     return null;
   }
 }
