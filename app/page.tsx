@@ -1,4 +1,4 @@
-//app/page.tsx
+// app/page.tsx
 
 "use client";
 
@@ -32,12 +32,7 @@ export default function Home() {
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <RepoInput onGenerate={handleGenerate} />
-          {readmeContent && (
-            <ReadmePreview
-              readmeContent={readmeContent}
-              className="h-full" // Make preview fill available height
-            />
-          )}
+          <ReadmePreview readmeContent={readmeContent} />
         </div>
         <ToastContainer position="top-right" autoClose={3000} />
       </div>

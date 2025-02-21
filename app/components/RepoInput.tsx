@@ -1,4 +1,4 @@
-// components/RepoInput.tsx;
+// components/RepoInput.tsx
 
 "use client";
 
@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { fetchRepoData } from "../utils/fetchRepoData";
+import { FaGithub } from "react-icons/fa";
 
 interface RepoInputProps {
   onGenerate: (
@@ -122,7 +123,7 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
     readmeGenerated && Object.keys(latestRepoData).length > 0;
 
   return (
-    <div className=" bg-white rounded-lg shadow-md p-6 flex flex-col h-full">
+    <div className="rounded-lg shadow-md p-6 flex flex-col h-full bg-white/80 backdrop-blur-md border border-gray-200">
       {/* Input and Switches */}
       <div>
         <Input
@@ -179,11 +180,17 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
       {/* Generate Button - Pushed to the bottom */}
       <div className="mt-auto">
         <Button
-          className="w-full mt-4 bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="w-full mt-4 bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"
           onClick={handleGenerate}
           disabled={isRepoUrlEmpty}
         >
-          {isLoading ? "Generating..." : "Generate README"}
+          {isLoading ? (
+            "Generating..."
+          ) : (
+            <>
+              Generate README <FaGithub className="ml-2" />
+            </>
+          )}
         </Button>
       </div>
     </div>

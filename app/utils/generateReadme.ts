@@ -47,7 +47,7 @@ export function generateReadme(
   if (sections.installation) {
     readme += `## 📦 Installation\n${
       customContent.installation ||
-      `\`\`\`sh\ngit clone https://github.com/${data.owner}/${data.repo}.git\ncd ${data.repo}\nnpm install\n\`\`\`\n`
+      `\`\`\`sh\ngit clone https://github.com/${data.owner}/${data.repo}.git\ncd ${data.repo}\nnpm install\n\`\`\``
     }\n`;
   }
 
