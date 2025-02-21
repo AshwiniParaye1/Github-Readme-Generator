@@ -40,14 +40,21 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
   const [editingSection, setEditingSection] = useState<string | null>(null);
   const [originalContent, setOriginalContent] = useState<string>("");
   const [readmeGenerated, setReadmeGenerated] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleToggle = (section: string) => {
     setSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
   const handleEdit = (section: string) => {
-    setOriginalContent(customContent[section] || latestRepoData[section] || "");
+    // Get current content from either customContent or latestRepoData
+    const currentContent =
+      customContent[section] || latestRepoData[section] || "";
+    setOriginalContent(currentContent);
+    setCustomContent((prev) => ({
+      ...prev,
+      [section]: currentContent
+    }));
     setEditingSection(section);
   };
 
@@ -71,26 +78,35 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
   };
 
   const handleGenerate = async () => {
-    setIsLoading(true); // Show loading message
+    setIsLoading(true);
     setReadmeGenerated(false);
 
     const repoData = await fetchRepoData(repoUrl);
     if (repoData) {
-      setLatestRepoData({
+      const newLatestRepoData = {
         title: repoData.name,
         description: repoData.description || "No description available.",
         features:
-          repoData.topics.length > 0 ? repoData.topics.join("\n- ") : "",
+          repoData.topics.length > 0 ? `- ${repoData.topics.join("\n- ")}` : "",
         techStack:
-          repoData.languages.length > 0 ? repoData.languages.join("\n- ") : "",
-        installation: `\`\`\`sh\ngit clone https://github.com/${repoData.owner}/${repoData.repo}.git\ncd ${repoData.repo}\nnpm install\n\`\`\``
-      });
+          repoData.languages.length > 0
+            ? `- ${repoData.languages.join("\n- ")}`
+            : "",
+        installation: `\`\`\`sh\ngit clone https://github.com/${repoData.owner}/${repoData.repo}.git\ncd ${repoData.repo}\nnpm install\n\`\`\``,
+        projectStructure: repoData.projectStructure || "",
+        apiStructure: "",
+        contribution:
+          "Contributions are welcome! Please open an issue or submit a pull request.",
+        license:
+          "This project is licensed under the MIT License - see the LICENSE file for details."
+      };
 
+      setLatestRepoData(newLatestRepoData);
       setReadmeGenerated(true);
       onGenerate(repoUrl, sections, customContent);
     }
 
-    setIsLoading(false); // Hide loading message
+    setIsLoading(false);
   };
 
   const isRepoUrlEmpty = repoUrl.trim() === "";
@@ -137,6 +153,7 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
               handleCustomContentChange(editingSection, e.target.value)
             }
             placeholder={`Update ${editingSection}`}
+            rows={6}
           />
           <div className="mt-2 flex space-x-2">
             <Button onClick={() => handleSave(editingSection)}>Save</Button>
