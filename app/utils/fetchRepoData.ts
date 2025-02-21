@@ -34,9 +34,25 @@ export async function fetchRepoData(repoUrl: string) {
       headers
     );
 
+    // Read README.md content
+    const readmeContent = await fetchFileContent(
+      owner,
+      repo,
+      "README.md",
+      headers
+    );
+
+    // Generate description
+    const generatedDescription = generateDescription(
+      data.description,
+      readmeContent,
+      frameworks,
+      languages
+    );
+
     return {
       name: data.name,
-      description: data.description || "No description available.",
+      description: generatedDescription,
       topics: data.topics || [],
       languages,
       frameworks,
@@ -127,6 +143,52 @@ async function fetchFrameworksAndDatabases(
     console.error("Error fetching package.json:", error);
     return { frameworks: [], databases: [] };
   }
+}
+
+// Function to fetch file content
+async function fetchFileContent(
+  owner: string,
+  repo: string,
+  path: string,
+  headers: any
+) {
+  try {
+    const { data } = await axios.get(
+      `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
+      { headers }
+    );
+    return Buffer.from(data.content, "base64").toString("utf-8");
+  } catch (error) {
+    console.error(`Error fetching file ${path}:`, error);
+    return "";
+  }
+}
+
+// Function to generate description
+function generateDescription(
+  repoDescription: string,
+  readmeContent: string,
+  frameworks: string[],
+  languages: string[]
+): string {
+  if (repoDescription) return repoDescription;
+
+  let description = "";
+
+  if (readmeContent) {
+    const firstParagraph = readmeContent.split("\n")[0];
+    description += firstParagraph.length > 50 ? firstParagraph : "";
+  }
+
+  if (frameworks.length > 0) {
+    description += `Built with ${frameworks.join(", ")}.`;
+  }
+
+  if (languages.length > 0) {
+    description += ` Written in ${languages.join(", ")}.`;
+  }
+
+  return description || "Add a brief description of the project.";
 }
 
 // Format repository files into a tree structure

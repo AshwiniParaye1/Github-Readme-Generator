@@ -28,7 +28,7 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
     projectStructure: false,
     contribution: false,
     license: false,
-    howToUse: true // Added howToUse section
+    howToUse: false
   });
 
   const [customContent, setCustomContent] = useState<Record<string, string>>(
@@ -85,7 +85,7 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
     if (repoData) {
       const newLatestRepoData = {
         title: repoData.name,
-        description: repoData.description || "No description available.",
+        description: repoData.description,
         features:
           repoData.topics.length > 0 ? `- ${repoData.topics.join("\n- ")}` : "",
         techStack:
