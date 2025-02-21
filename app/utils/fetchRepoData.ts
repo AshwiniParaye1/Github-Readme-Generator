@@ -30,7 +30,7 @@ export async function fetchRepoData(repoUrl: string) {
       languages: await fetchLanguages(owner, repo, headers),
       owner: data.owner.login,
       repo,
-      projectStructure: formatTree(treeData)
+      projectStructure: formatTree(treeData) // Ensure formatted tree is returned
     };
   } catch (error) {
     console.error("Error fetching repo data:", error);
@@ -121,5 +121,5 @@ function formatTreeToString(tree: any, prefix = "") {
       result += formatTreeToString(tree[key], `${prefix}│   `);
     }
   }
-  return result;
+  return result.trim(); // Ensure no extra spaces or newlines
 }

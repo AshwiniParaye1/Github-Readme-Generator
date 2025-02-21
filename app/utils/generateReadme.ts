@@ -46,7 +46,9 @@ export function generateReadme(
 
   if (sections.projectStructure) {
     readme += `## 📂 Project Structure\n\`\`\`\n${
-      customContent.projectStructure || data.projectStructure
+      customContent.projectStructure ||
+      data.projectStructure ||
+      "Project structure not available."
     }\n\`\`\`\n\n`;
   }
 
