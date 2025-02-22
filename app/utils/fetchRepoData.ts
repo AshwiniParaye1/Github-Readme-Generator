@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 //utils/fetchRepoData.ts
 
 import axios from "axios";
@@ -223,7 +224,7 @@ function formatTree(tree: any[]) {
     "eslint.config.js"
   ];
 
-  let treeStructure: any = {};
+  const treeStructure: any = {};
 
   tree.forEach((item) => {
     const pathParts = item.path.split("/");

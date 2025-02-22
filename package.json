@@ -15,7 +15,7 @@
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "js-file-download": "^0.4.12",
-    "next": "15.1.7",
+    "next": "^15.2.0-canary.69",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
@@ -30,6 +30,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9.21.0",
+    "eslint-config-next": "^15.1.7",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
