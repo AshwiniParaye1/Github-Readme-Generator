@@ -5,6 +5,8 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "react-toastify";
 import { FaCopy, FaDownload, FaGithub } from "react-icons/fa";
+// import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'; // If you add syntax highlighting
+// import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 interface ReadmePreviewProps {
   readmeContent: string;
@@ -44,7 +46,8 @@ export default function ReadmePreview({ readmeContent }: ReadmePreviewProps) {
 
   return (
     <div className="rounded-lg shadow-md overflow-hidden bg-gray-900 border border-gray-700">
-      <div className="px-6 py-4 h-[504px] overflow-y-auto relative">
+      <div className="px-6 py-4 h-[504px] overflow-y-auto relative bg-pattern">
+        {/* Added bg-pattern class */}
         {hasReadmeContent ? (
           <div className="prose max-w-none text-white">
             <ReactMarkdown
@@ -84,6 +87,24 @@ export default function ReadmePreview({ readmeContent }: ReadmePreviewProps) {
                 code: ({ node, ...props }) => (
                   <code {...props} className="text-red-400" />
                 )
+                // If you add syntax highlighting:
+                // code: ({ node, inline, className, children, ...props }) => {
+                //   const match = (className || '').match(/language-(?<lang>.*)/);
+                //   return !inline && match ? (
+                //     <SyntaxHighlighter
+                //       {...props}
+                //       style={dracula}
+                //       language={match.groups?.lang}
+                //       PreTag="div"
+                //     >
+                //       {String(children).replace(/\n$/, '')}
+                //     </SyntaxHighlighter>
+                //   ) : (
+                //     <code {...props} className={className}>
+                //       {children}
+                //     </code>
+                //   );
+                // }
               }}
             >
               {readmeContent}
@@ -92,7 +113,8 @@ export default function ReadmePreview({ readmeContent }: ReadmePreviewProps) {
         ) : (
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500 text-center">
             <div className="flex flex-col items-center w-full">
-              <FaGithub className="inline-block mb-2 text-4xl" />
+              <FaGithub className="inline-block mb-2 text-4xl animate-pulse" />
+              {/* Added animate-pulse */}
               <span className="text-lg">README will be generated here</span>
             </div>
           </div>

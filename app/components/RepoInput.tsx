@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { fetchRepoData } from "../utils/fetchRepoData";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaEdit, FaSave, FaTimes } from "react-icons/fa"; // Import new icons
 import { useState } from "react";
 
 interface RepoInputProps {
@@ -148,7 +148,9 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
                   checked={isEnabled}
                   onCheckedChange={() => handleToggle(section)}
                   disabled={isRepoUrlEmpty}
-                  className="bg-gray-500 border-zinc-100" // Uniform toggle style
+                  className={`bg-gray-500 border-zinc-100 ${
+                    editingSection === section ? "ring-2 ring-purple-500" : ""
+                  }`} // Highlight when editing
                 />
                 <span className="text-gray-100 capitalize">{section}</span>
               </div>
@@ -159,14 +161,15 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
                 disabled={isRepoUrlEmpty || !isReadmeGenerated || !isEnabled}
                 className="text-gray-500 font-bold border-gray-600 hover:bg-gray-700 hover:text-gray-300"
               >
-                Edit
+                <FaEdit className="mr-1" /> Edit
               </Button>
             </div>
           ))}
         </div>
 
         {editingSection && (
-          <div className="mt-4">
+          <div className="mt-4 transition-all duration-300 ease-in-out">
+            {/* Transition effect */}
             <Textarea
               value={customContent[editingSection] || ""}
               onChange={(e) =>
@@ -176,10 +179,20 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
               rows={6}
               className="w-full p-2 border rounded focus:ring-purple-500 focus:border-purple-500 bg-gray-800 text-white"
             />
-            <div className="mt-2 flex space-x-2">
-              <Button onClick={() => handleSave(editingSection)}>Save</Button>
-              <Button variant="outline" onClick={handleCancel}>
-                Cancel
+            <div className="mt-2 flex space-x-2 gap-2 border-gray-300 ">
+              <Button
+                variant={"ghost"}
+                onClick={() => handleSave(editingSection)}
+                className="font-semibold"
+              >
+                <FaSave className="mr-1" /> Save
+              </Button>
+              <Button
+                variant={"outline"}
+                onClick={handleCancel}
+                className="text-gray-800 hover:bg-slate-800 hover:text-white font-semibold"
+              >
+                <FaTimes className="mr-1 " /> Cancel
               </Button>
             </div>
           </div>
