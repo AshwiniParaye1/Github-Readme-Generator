@@ -1,14 +1,13 @@
 // components/RepoInput.tsx
-
 "use client";
 
-import { useState } from "react";
-import { Switch } from "@/components/ui/switch";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 import { fetchRepoData } from "../utils/fetchRepoData";
 import { FaGithub } from "react-icons/fa";
+import { useState } from "react";
 
 interface RepoInputProps {
   onGenerate: (
@@ -130,12 +129,12 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
     readmeGenerated && Object.keys(latestRepoData).length > 0;
 
   return (
-    <div className="rounded-lg shadow-md p-6 flex flex-col h-full bg-white border border-gray-200">
+    <div className="rounded-lg shadow-md p-6 flex flex-col h-full bg-gray-900 border border-gray-700">
       {/* Input and Switches */}
       <div>
         <Input
           type="text"
-          className="w-full p-2 border rounded focus:ring-purple-500 focus:border-purple-500"
+          className="w-full p-2 border rounded focus:ring-purple-500 focus:border-purple-500 bg-gray-800 text-white"
           placeholder="Enter GitHub Repository URL"
           value={repoUrl}
           onChange={(e) => setRepoUrl(e.target.value)}
@@ -148,14 +147,16 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
                   checked={isEnabled}
                   onCheckedChange={() => handleToggle(section)}
                   disabled={isRepoUrlEmpty}
+                  className="bg-gray-500 border-zinc-100" // Uniform toggle style
                 />
-                <span className="text-gray-700 capitalize">{section}</span>
+                <span className="text-gray-100 capitalize">{section}</span>
               </div>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => handleEdit(section)}
                 disabled={isRepoUrlEmpty || !isReadmeGenerated || !isEnabled}
+                className="text-gray-500 font-bold border-gray-600 hover:bg-gray-700 hover:text-gray-300"
               >
                 Edit
               </Button>
@@ -172,7 +173,7 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
               }
               placeholder={`Update ${editingSection}`}
               rows={6}
-              className="w-full p-2 border rounded focus:ring-purple-500 focus:border-purple-500"
+              className="w-full p-2 border rounded focus:ring-purple-500 focus:border-purple-500 bg-gray-800 text-white"
             />
             <div className="mt-2 flex space-x-2">
               <Button onClick={() => handleSave(editingSection)}>Save</Button>
@@ -187,7 +188,7 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
       {/* Generate Button - Pushed to the bottom */}
       <div className="mt-auto">
         <Button
-          className="w-full mt-4 bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"
+          className="w-full mt-4 bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"
           onClick={handleGenerate}
           disabled={isRepoUrlEmpty}
         >

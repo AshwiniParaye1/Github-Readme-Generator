@@ -1,5 +1,4 @@
 // components/ReadmePreview.tsx
-
 "use client";
 import React from "react";
 import ReactMarkdown from "react-markdown";
@@ -43,46 +42,46 @@ export default function ReadmePreview({ readmeContent }: ReadmePreviewProps) {
   const hasReadmeContent = readmeContent.trim() !== "";
 
   return (
-    <div className="rounded-lg shadow-md overflow-hidden bg-white border border-gray-200">
+    <div className="rounded-lg shadow-md overflow-hidden bg-gray-900 border border-gray-700">
       <div className="px-6 py-4 h-[504px] overflow-y-auto relative">
         {hasReadmeContent ? (
-          <div className="prose max-w-none">
+          <div className="prose max-w-none text-white">
             <ReactMarkdown
               components={{
                 h1: ({ node, ...props }) => (
                   <h1
                     {...props}
-                    className="text-3xl font-bold text-center text-gray-800 mb-4"
+                    className="text-3xl font-bold text-center text-white mb-4"
                   />
                 ),
                 h2: ({ node, ...props }) => (
                   <h2
                     {...props}
-                    className="text-2xl font-semibold text-gray-700 mt-6 mb-3"
+                    className="text-2xl font-semibold text-gray-300 mt-6 mb-3"
                   />
                 ),
                 h3: ({ node, ...props }) => (
                   <h3
                     {...props}
-                    className="text-xl font-medium text-gray-600 mt-4 mb-2"
+                    className="text-xl font-medium text-gray-400 mt-4 mb-2"
                   />
                 ),
                 p: ({ node, ...props }) => (
-                  <p {...props} className="text-gray-700 leading-relaxed" />
+                  <p {...props} className="text-gray-300 leading-relaxed" />
                 ),
                 ul: ({ node, ...props }) => (
-                  <ul {...props} className="list-disc pl-5 text-gray-700" />
+                  <ul {...props} className="list-disc pl-5 text-gray-300" />
                 ),
                 ol: ({ node, ...props }) => (
-                  <ol {...props} className="list-decimal pl-5 text-gray-700" />
+                  <ol {...props} className="list-decimal pl-5 text-gray-300" />
                 ),
                 pre: ({ node, ...props }) => (
-                  <pre className="bg-gray-100 text-gray-800 p-4 rounded-md overflow-auto">
+                  <pre className="bg-gray-800 text-gray-200 p-4 rounded-md overflow-auto">
                     <code {...props} />
                   </pre>
                 ),
                 code: ({ node, ...props }) => (
-                  <code {...props} className="text-red-500" />
+                  <code {...props} className="text-red-400" />
                 )
               }}
             >
@@ -97,17 +96,17 @@ export default function ReadmePreview({ readmeContent }: ReadmePreviewProps) {
         )}
       </div>
       {hasReadmeContent && (
-        <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end gap-4">
+        <div className="px-6 py-4 bg-gray-800 border-t border-gray-700 flex justify-end gap-4">
           <button
             onClick={handleCopyToClipboard}
-            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"
+            className="bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"
           >
             <FaCopy className="mr-2" />
             Copy
           </button>
           <button
             onClick={handleDownloadReadme}
-            className="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"
+            className="bg-emerald-600 hover:bg-emerald-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"
           >
             <FaDownload className="mr-2" />
             Download

@@ -1,5 +1,4 @@
 // app/page.tsx
-
 "use client";
 
 import { useState } from "react";
@@ -27,11 +26,11 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col">
+    <div className="bg-black min-h-screen flex flex-col text-white">
       {/* Header */}
       <Header />
 
-      <main className="container mx-auto px-4 my-4 sm:px-6 lg:px-8 py-20 flex-grow ">
+      <main className="container mx-auto px-4 my-4 sm:px-6 lg:px-8 py-20 flex-grow">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <RepoInput onGenerate={handleGenerate} />
           <ReadmePreview readmeContent={readmeContent} />
