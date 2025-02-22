@@ -27,7 +27,7 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
     techStack: true,
     installation: true,
     projectStructure: false,
-    contribution: false,
+    contribution: true,
     license: false,
     howToUse: false,
     support: true
@@ -105,8 +105,12 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
             : "- No technologies detected.",
         installation: `\`\`\`sh\ngit clone https://github.com/${repoData.owner}/${repoData.repo}.git\ncd ${repoData.repo}\nnpm install\n\`\`\``,
         projectStructure: repoData.projectStructure || "",
-        contribution:
-          "Contributions are welcome! Please open an issue or submit a pull request.",
+        contribution: `We welcome contributions! Here's how you can contribute:\n
+1.  Fork the repository.
+2.  Create a new branch for your feature or bug fix.
+3.  Make your changes and commit them.
+4.  Push your changes to your fork.
+5.  Submit a pull request.`,
         license:
           "This project is licensed under the MIT License - see the LICENSE file for details.",
         howToUse: "Provide instructions on how to use your project here.", // Added howToUse

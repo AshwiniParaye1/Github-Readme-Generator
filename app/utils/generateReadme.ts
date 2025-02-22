@@ -70,7 +70,12 @@ export function generateReadme(
   if (sections.contribution) {
     readme += `## 🤝 Contribution\n${
       customContent.contribution ||
-      "Contributions are welcome! Please open an issue or submit a pull request."
+      `We welcome contributions! Here's how you can contribute:\n
+1.  Fork the repository.
+2.  Create a new branch for your feature or bug fix.
+3.  Make your changes and commit them.
+4.  Push your changes to your fork.
+5.  Submit a pull request.`
     }\n\n`;
   }
 
@@ -86,7 +91,7 @@ export function generateReadme(
       customContent.support ||
       `Thank you for checking out ${
         customContent.title || data.name
-      }! If you find it useful, consider giving it a ⭐ on GitHub!`
+      }! If you find it useful, consider giving it a star on GitHub!`
     }\n\n`;
   }
 
