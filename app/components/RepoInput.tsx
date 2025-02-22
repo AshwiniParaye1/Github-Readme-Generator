@@ -29,7 +29,8 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
     projectStructure: false,
     contribution: false,
     license: false,
-    howToUse: false
+    howToUse: false,
+    support: true
   });
 
   const [customContent, setCustomContent] = useState<Record<string, string>>(
@@ -61,6 +62,7 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
 
   const handleSave = (section: string) => {
     setEditingSection(null);
+    // Call onGenerate here to update the ReadmePreview
     onGenerate(repoUrl, sections, customContent);
   };
 
@@ -107,7 +109,8 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
           "Contributions are welcome! Please open an issue or submit a pull request.",
         license:
           "This project is licensed under the MIT License - see the LICENSE file for details.",
-        howToUse: "Provide instructions on how to use your project here." // Added howToUse
+        howToUse: "Provide instructions on how to use your project here.", // Added howToUse
+        support: `Thank you for checking out ${repoData.name}! If you find it useful, consider giving it a star on GitHub!`
       };
 
       setLatestRepoData(newLatestRepoData);

@@ -1,4 +1,4 @@
-//utils/generateReadme.ts
+// utils/generateReadme.ts
 
 export function generateReadme(
   data: any,
@@ -81,12 +81,14 @@ export function generateReadme(
     }\n\n`;
   }
 
-  readme += `---
-  
-  Thank you for checking out ${
-    customContent.title || data.name
-  }! If you find it useful, consider giving it a star on GitHub!  
-  \n`;
+  if (sections.support) {
+    readme += `## ❤️ Support\n${
+      customContent.support ||
+      `Thank you for checking out ${
+        customContent.title || data.name
+      }! If you find it useful, consider giving it a ⭐ on GitHub!`
+    }\n\n`;
+  }
 
   return readme;
 }
