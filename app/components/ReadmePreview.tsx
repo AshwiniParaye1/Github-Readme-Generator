@@ -43,7 +43,7 @@ export default function ReadmePreview({ readmeContent }: ReadmePreviewProps) {
   const hasReadmeContent = readmeContent.trim() !== "";
 
   return (
-    <div className="rounded-lg shadow-md overflow-hidden bg-white/80 backdrop-blur-md border border-gray-200">
+    <div className="rounded-lg shadow-md overflow-hidden bg-white border border-gray-200">
       <div className="px-6 py-4 h-[504px] overflow-y-auto relative">
         {hasReadmeContent ? (
           <div className="prose max-w-none">
@@ -97,7 +97,7 @@ export default function ReadmePreview({ readmeContent }: ReadmePreviewProps) {
         )}
       </div>
       {hasReadmeContent && (
-        <div className="px-6 py-4 bg-blue-50 border-t border-gray-200 flex justify-end gap-4">
+        <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end gap-4">
           <button
             onClick={handleCopyToClipboard}
             className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"

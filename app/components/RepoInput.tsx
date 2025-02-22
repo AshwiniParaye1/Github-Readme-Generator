@@ -130,7 +130,7 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
     readmeGenerated && Object.keys(latestRepoData).length > 0;
 
   return (
-    <div className="rounded-lg shadow-md p-6 flex flex-col h-full bg-white/80 backdrop-blur-md border border-gray-200">
+    <div className="rounded-lg shadow-md p-6 flex flex-col h-full bg-white border border-gray-200">
       {/* Input and Switches */}
       <div>
         <Input

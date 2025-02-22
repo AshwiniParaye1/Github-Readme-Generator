@@ -9,8 +9,6 @@ import RepoInput from "./components/RepoInput";
 import ReadmePreview from "./components/ReadmePreview";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaCoffee, FaGithub } from "react-icons/fa";
-import Link from "next/link";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
@@ -29,17 +27,17 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-gradient-to-br from-blue-100 to-green-100 min-h-screen py-12">
+    <div className="bg-gray-100 min-h-screen flex flex-col">
       {/* Header */}
       <Header />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="container mx-auto px-4 my-4 sm:px-6 lg:px-8 py-20 flex-grow ">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <RepoInput onGenerate={handleGenerate} />
           <ReadmePreview readmeContent={readmeContent} />
         </div>
         <ToastContainer position="top-right" autoClose={3000} />
-      </div>
+      </main>
 
       {/* Footer */}
       <Footer />
