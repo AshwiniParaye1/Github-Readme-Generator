@@ -1,5 +1,3 @@
-// components/Header.tsx
-
 import Link from "next/link";
 import React from "react";
 import { FaCoffee, FaGithub } from "react-icons/fa";
@@ -12,11 +10,12 @@ const Header = () => {
           <FaGithub className="w-6 h-6" />
           <h1 className="text-xl font-bold">README Generator</h1>
         </div>
+        {/* Hide Support button on mobile (show on sm and larger) */}
         <Link
           href="https://github.com/AshwiniParaye1/Github-Readme-Generator"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
+          className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
         >
           <FaCoffee className="w-4 h-4 text-yellow-400" />
           <span>Support Project</span>
