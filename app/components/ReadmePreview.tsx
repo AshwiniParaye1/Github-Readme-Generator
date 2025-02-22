@@ -52,7 +52,7 @@ export default function ReadmePreview({ readmeContent }: ReadmePreviewProps) {
                 h1: ({ node, ...props }) => (
                   <h1
                     {...props}
-                    className="text-3xl font-bold text-center text-white mb-4"
+                    className="text-3xl font-bold text-center text-white mb-4 border-b border-gray-700 pb-2"
                   />
                 ),
                 h2: ({ node, ...props }) => (
@@ -91,8 +91,10 @@ export default function ReadmePreview({ readmeContent }: ReadmePreviewProps) {
           </div>
         ) : (
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500 text-center">
-            <FaGithub className="inline-block mr-2 text-2xl" />
-            <span>README will be generated here</span>
+            <div className="flex flex-col items-center w-full">
+              <FaGithub className="inline-block mb-2 text-4xl" />
+              <span className="text-lg">README will be generated here</span>
+            </div>
           </div>
         )}
       </div>
