@@ -96,24 +96,24 @@ export default function ReadmePreview({ readmeContent }: ReadmePreviewProps) {
           </div>
         )}
       </div>
-      <div className="px-6 py-4 bg-blue-50 border-t border-gray-200 flex justify-end gap-4">
-        <button
-          onClick={handleCopyToClipboard}
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"
-          disabled={!hasReadmeContent}
-        >
-          <FaCopy className="mr-2" />
-          Copy
-        </button>
-        <button
-          onClick={handleDownloadReadme}
-          className="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"
-          disabled={!hasReadmeContent}
-        >
-          <FaDownload className="mr-2" />
-          Download
-        </button>
-      </div>
+      {hasReadmeContent && (
+        <div className="px-6 py-4 bg-blue-50 border-t border-gray-200 flex justify-end gap-4">
+          <button
+            onClick={handleCopyToClipboard}
+            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"
+          >
+            <FaCopy className="mr-2" />
+            Copy
+          </button>
+          <button
+            onClick={handleDownloadReadme}
+            className="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"
+          >
+            <FaDownload className="mr-2" />
+            Download
+          </button>
+        </div>
+      )}
     </div>
   );
 }
