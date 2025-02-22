@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 
 const title = "GitHub README Generator";
 const description = "Effortless GitHub READMEs! just drop a link & done!";
-const logo = "/github.png";
-const ogImage = "/github.png";
+const logo = "../public/github.png";
+const ogImage = "../public/github.png";
 const url = "https://readme-generator1.vercel.app/";
 
 export const metadata: Metadata = {
