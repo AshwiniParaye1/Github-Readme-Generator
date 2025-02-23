@@ -45,9 +45,10 @@ export default function ReadmePreview({ readmeContent }: ReadmePreviewProps) {
   const hasReadmeContent = readmeContent.trim() !== "";
 
   return (
-    <div className="rounded-lg shadow-md overflow-hidden bg-gray-900 border border-gray-700">
-      <div className="px-6 py-4 h-[504px] overflow-y-auto relative bg-pattern">
-        {/* Added bg-pattern class */}
+    <div className="rounded-lg shadow-md overflow-hidden bg-gray-900 border border-gray-700 flex flex-col h-full">
+      {/* Added flex flex-col h-full to the main div */}
+      <div className="px-6 py-4 h-[504px] overflow-y-auto relative bg-pattern flex-grow">
+        {/* Added flex-grow to the content div */}
         {hasReadmeContent ? (
           <div className="prose max-w-none text-white">
             <ReactMarkdown
@@ -96,7 +97,6 @@ export default function ReadmePreview({ readmeContent }: ReadmePreviewProps) {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500 text-center">
             <div className="flex flex-col items-center w-full">
               <FaGithub className="inline-block mb-2 text-4xl animate-pulse" />
-              {/* Added animate-pulse */}
               <span className="text-lg">README will be generated here</span>
             </div>
           </div>
