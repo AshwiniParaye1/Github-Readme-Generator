@@ -179,20 +179,18 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
               rows={6}
               className="w-full p-2 border rounded focus:ring-purple-500 focus:border-purple-500 bg-gray-800 text-white"
             />
-            <div className="mt-2 flex space-x-2 gap-2 border-gray-300 ">
+            <div className="mt-2 flex space-x-2 gap-2 border-gray-300">
               <Button
-                variant={"ghost"}
                 onClick={() => handleSave(editingSection)}
-                className="font-semibold"
+                className="px-6 py-2 text-lg font-semibold text-white bg-gradient-to-br from-black to-blue-950 hover:brightness-125 transition-transform transform hover:scale-105 rounded-md shadow-lg flex items-center"
               >
-                <FaSave className="mr-1" /> Save
+                <FaSave className="mr-2" /> Save
               </Button>
               <Button
-                variant={"outline"}
                 onClick={handleCancel}
-                className="text-gray-800 hover:bg-slate-800 hover:text-white font-semibold"
+                className="px-6 py-2 text-lg font-semibold text-white bg-gradient-to-br from-black to-blue-950 hover:brightness-125 transition-transform transform hover:scale-105 rounded-md shadow-lg flex items-center"
               >
-                <FaTimes className="mr-1 " /> Cancel
+                <FaTimes className="mr-2" /> Cancel
               </Button>
             </div>
           </div>
@@ -202,7 +200,7 @@ export default function RepoInput({ onGenerate }: RepoInputProps) {
       {/* Generate Button - Pushed to the bottom */}
       <div className="mt-auto">
         <Button
-          className="w-full mt-4 bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"
+          className="w-full mt-4 px-6 py-3 text-lg font-semibold text-white bg-gradient-to-br from-black to-blue-950 hover:brightness-125 transition-transform transform hover:scale-105 rounded-md shadow-lg flex items-center justify-center"
           onClick={handleGenerate}
           disabled={isRepoUrlEmpty}
         >

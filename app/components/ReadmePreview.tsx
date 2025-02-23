@@ -5,8 +5,6 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "react-toastify";
 import { FaCopy, FaDownload, FaGithub } from "react-icons/fa";
-// import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'; // If you add syntax highlighting
-// import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 interface ReadmePreviewProps {
   readmeContent: string;
@@ -87,24 +85,6 @@ export default function ReadmePreview({ readmeContent }: ReadmePreviewProps) {
                 code: ({ node, ...props }) => (
                   <code {...props} className="text-red-400" />
                 )
-                // If you add syntax highlighting:
-                // code: ({ node, inline, className, children, ...props }) => {
-                //   const match = (className || '').match(/language-(?<lang>.*)/);
-                //   return !inline && match ? (
-                //     <SyntaxHighlighter
-                //       {...props}
-                //       style={dracula}
-                //       language={match.groups?.lang}
-                //       PreTag="div"
-                //     >
-                //       {String(children).replace(/\n$/, '')}
-                //     </SyntaxHighlighter>
-                //   ) : (
-                //     <code {...props} className={className}>
-                //       {children}
-                //     </code>
-                //   );
-                // }
               }}
             >
               {readmeContent}
@@ -120,18 +100,19 @@ export default function ReadmePreview({ readmeContent }: ReadmePreviewProps) {
           </div>
         )}
       </div>
+      {/* Buttons Section */}
       {hasReadmeContent && (
         <div className="px-6 py-4 bg-gray-800 border-t border-gray-700 flex justify-end gap-4">
           <button
             onClick={handleCopyToClipboard}
-            className="bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"
+            className="px-6 py-2 text-lg font-semibold text-white bg-gradient-to-br from-black to-blue-950 hover:brightness-125 transition-transform transform hover:scale-105 rounded-md shadow-lg flex items-center"
           >
             <FaCopy className="mr-2" />
             Copy
           </button>
           <button
             onClick={handleDownloadReadme}
-            className="bg-emerald-600 hover:bg-emerald-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"
+            className="px-6 py-2 text-lg font-semibold text-white bg-gradient-to-br from-black to-blue-950 hover:brightness-125 transition-transform transform hover:scale-105 rounded-md shadow-lg flex items-center"
           >
             <FaDownload className="mr-2" />
             Download

@@ -7,10 +7,12 @@ const Header = () => {
   return (
     <header className="bg-gray-900 text-white py-4 fixed w-full top-0 z-10 shadow-md">
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <FaGithub className="w-6 h-6" />
-          <h1 className="text-xl font-bold">README Generator</h1>
-        </div>
+        <Link href={"/"}>
+          <div className="flex items-center gap-2">
+            <FaGithub className="w-6 h-6" />
+            <h1 className="text-xl font-bold">README Generator</h1>
+          </div>
+        </Link>
         <Link
           href="https://github.com/AshwiniParaye1/Github-Readme-Generator"
           target="_blank"
