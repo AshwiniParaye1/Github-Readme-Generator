@@ -27,7 +27,7 @@ export default function GenerateReadme() {
   };
 
   return (
-    <div className="mt-10 mb-10 sm:mt-16 flex flex-col min-h-screen bg-gradient-to-br from-black via-black to-blue-950 text-white">
+    <div className="mt-10 mb-10 sm:mb-1 sm:mt-16 flex flex-col min-h-screen bg-gradient-to-br from-black via-black to-blue-950 text-white">
       {/* Header */}
       <Header />
 
