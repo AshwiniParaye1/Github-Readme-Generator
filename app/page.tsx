@@ -26,13 +26,13 @@ export default function Home() {
 
         {/* How to Use Section */}
         <div className="bg-white/10 backdrop-blur-md p-6 rounded-lg shadow-lg max-w-2xl w-full">
-          <h2 className="text-xl font-semibold mb-4 text-white">
+          <h2 className="text-2xl font-semibold mb-2 text-white">
             How It Works
           </h2>
-          <p className="mb-4 text-gray-300">
+          <p className="mb-4 text-gray-300 text-lg">
             Getting started is simple. Just follow these steps:
           </p>
-          <ol className="list-decimal pl-6 space-y-3 text-left text-gray-300">
+          <ol className="list-decimal text-lg pl-6 space-y-3 text-left text-gray-300">
             <li>
               Paste your{" "}
               <span className="font-medium text-white">
