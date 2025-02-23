@@ -1,3 +1,5 @@
+//app/page.tsx
+
 "use client";
 
 import "react-toastify/dist/ReactToastify.css";

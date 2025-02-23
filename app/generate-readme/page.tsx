@@ -1,3 +1,5 @@
+//app/generate-readme/page.tsx
+
 "use client";
 
 import { useState } from "react";
