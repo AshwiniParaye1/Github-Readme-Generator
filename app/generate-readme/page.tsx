@@ -1,4 +1,3 @@
-// app/page.tsx
 "use client";
 
 import { useState } from "react";
@@ -26,12 +25,12 @@ export default function GenerateReadme() {
   };
 
   return (
-    <div className="bg-black min-h-screen flex flex-col text-white">
+    <div className="mt-10 mb-10 flex flex-col min-h-screen bg-gradient-to-br from-black via-black to-blue-950 text-white">
       {/* Header */}
       <Header />
 
-      <main className="container mx-auto px-4 my-4 sm:px-6 lg:px-8 py-20 flex-grow">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <main className="flex flex-col flex-grow px-4 py-10 sm:px-6 lg:px-8">
+        <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
           <RepoInput onGenerate={handleGenerate} />
           <ReadmePreview readmeContent={readmeContent} />
         </div>
