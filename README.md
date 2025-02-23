@@ -58,7 +58,7 @@ We welcome contributions! Here's how you can contribute:
 5.  Submit a pull request.
 
 ## ❤️ Support
-Thank you for checking out Github-Readme-Generator ✨! If you find it useful, consider giving it a star on GitHub!
+Thank you for checking out Github-Readme-Generator ✨! If you find it useful, consider giving it a star on GitHub!\n\n
 
 https://www.loom.com/share/24fb99d3b141414ab17419dfa5e6ddeb?sid=1339073a-21f7-40ec-a2ea-c8575d629419
 
