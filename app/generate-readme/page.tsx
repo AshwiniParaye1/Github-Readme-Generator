@@ -27,11 +27,11 @@ export default function GenerateReadme() {
   };
 
   return (
-    <div className="mt-10 mb-10 sm:mb-1 sm:mt-16 flex flex-col min-h-screen bg-gradient-to-br from-black via-black to-blue-950 text-white">
+    <div className="generate-readme-container sm:mt-2 flex flex-col min-h-screen bg-gradient-to-br from-black via-black to-blue-950 text-white">
       {/* Header */}
       <Header />
 
-      <main className="flex flex-col flex-grow px-4 py-10 sm:px-6 lg:px-8">
+      <main className="flex flex-col sm:mt-16 sm:mb-12 justify-center items-center flex-grow px-4 py-10 sm:px-6 lg:px-8">
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
           <RepoInput onGenerate={handleGenerate} />
           <ReadmePreview readmeContent={readmeContent} />

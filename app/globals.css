@@ -13,3 +13,10 @@ body {
     --radius: 0.5rem;
   }
 }
+
+@media (max-width: 640px) {
+  .generate-readme-container {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+}
